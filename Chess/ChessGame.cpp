@@ -25,7 +25,7 @@ namespace Chess {
 
 		newGame(board);
 
-		std::cout << "HereR" << std::endl;
+		std::cout << "Here" << std::endl;
 	}
 
 	void newGame(ChessBoard &board) {
