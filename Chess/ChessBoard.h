@@ -56,5 +56,7 @@ namespace Chess {
 		const std::vector<std::string>& getHistory() const { return history; }
 
 		bool operator==(const ChessBoard &temp) const;
+		friend std::ostream& operator<<(std::ostream&, ChessBoard&);
+		friend std::istream& operator>>(std::istream&, ChessBoard&);
 	};
 }

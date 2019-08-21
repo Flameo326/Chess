@@ -3,47 +3,29 @@
 #include "Display.h"
 #include <iostream>
 #include <ConsoleIO.h>
+#include <fstream>
 
 namespace Chess {
 
-/*	ChessGame::ChessGame() {
-		// Initialize Board
-		ChessBoard board;
+	const char* ChessGame::AUTO_SAVE_FILE_PATH = "./.autosave.";
+
+	ChessGame::ChessGame() : display{board}, movement{board} {
 		board.resetBoard();
 
-		newGame(board);
-
-		// Create a player struct
-		// Constains Name, AILevel...
-	}
-	//ChessGame::ChessGame(ChessBoard &b);
-	//ChessGame::ChessGame(ChessBoard &b, Display &d);*/
-	
-	void newGame() {
-		ChessBoard board;
-		board.resetBoard();
-
-		newGame(board);
-
-		//std::cout << "Here";
+		if(load(AUTO_SAVE_FILE_PATH)){
+			std::cout << "Loaded previous game\n";
+		}
 	}
 
-	void newGame(ChessBoard &board) {
-		// Create Console Display
-		Display display(board);
-		newGame(board, display);
-	}
-
-	void newGame(ChessBoard &board, Display &d) {
-		// Create Game
-		ChessGame game{ board , d };
-
-		// While loop for Player Turn
-		bool isWhite = true;
+	void ChessGame::run() {
 		bool running = true;
 		while (running) {
-			running = game.playerTurn(isWhite);
+			running = this->playerTurn(isWhite);
 			isWhite = !isWhite;
+			
+			if(!save(AUTO_SAVE_FILE_PATH)){
+				std::cout << "Auto save failed\n";
+			} 
 		}
 	}
 
@@ -156,7 +138,31 @@ namespace Chess {
 		}
 
 		return true;
+	}	
+
+	bool ChessGame::save(const char* filePath) {
+		// save playerturn
+		// save Board
+		std::ofstream file(filePath, std::ios::binary | std::ios::trunc | std::ios::out);
+		if (file) {
+			file << isWhite; // Save Turn
+			file << '\n'; // Add Newline Format
+			file << board;// Save Board
+			file.close();
+			return true;
+		} 
+		return false;
 	}
 
-	
+	bool ChessGame::load(const char* filePath) {
+		std::ifstream file(filePath, std::ios::binary | std::ios::in);
+		if (file) {
+			file >> isWhite; // Load Turn
+			file.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore newline
+			file >> board; // Load Board
+			file.close();
+			return true;
+		}
+		return false;
+	}
 }

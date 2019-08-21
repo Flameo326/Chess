@@ -1,6 +1,7 @@
 
 #include "ChessBoard.h"
 #include <string>
+#include <iterator>
 
 namespace Chess {
 
@@ -250,5 +251,41 @@ namespace Chess {
 			}
 		}
 		return bitVect;
+	}
+
+	std::ostream& operator<<(std::ostream& out, ChessBoard& board) {
+		out << board.whiteTeamPos;
+		out << board.blackTeamPos;
+		out << board.pawns;
+		out << board.bishops;
+		out << board.knights;
+		out << board.rooks;
+		out << board.queens;
+		out << board.kings;
+
+		std::copy(board.history.begin(), board.history.end(), std::ostream_iterator<std::string>(out));
+
+		return out;
+	}
+
+	std::istream& operator>>(std::istream& in, ChessBoard& board) {
+		in >> board.whiteTeamPos;
+		in >> board.blackTeamPos;
+		in >> board.pawns;
+		in >> board.bishops;
+		in >> board.knights;
+		in >> board.rooks;
+		in >> board.queens;
+		in >> board.kings;
+
+		std::istream_iterator<std::string> eos; // End of Stream
+		std::istream_iterator<std::string> iter(in);
+
+		while (iter != eos) {
+			board.history.push_back(*iter);
+			iter++;
+		}
+
+		return in;
 	}
 }
