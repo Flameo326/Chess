@@ -4,11 +4,28 @@
 #include <bitset>
 #include <vector>
 
+#include <functional>
+#include <utility>
+#include <unordered_map>
+
+struct hash_pair final {
+	template<class TFirst, class TSecond>
+	size_t operator()(const std::pair<TFirst, TSecond>& p) const noexcept {
+		uintmax_t hash = std::hash<TFirst>{}(p.first);
+		hash <<= sizeof(uintmax_t) * 4;
+		hash ^= std::hash<TSecond>{}(p.second);
+		return std::hash<uintmax_t>{}(hash);
+	}
+};
+
 namespace Chess {
+	using Coord = std::pair<int, int>;
+	using MapOfCoords = std::unordered_map<Coord, std::vector<Coord>, hash_pair>;
 
 	class ChessBoard {
 	public:
 		const static int BOARD_LENGTH = 8;
+		
 
 	private:
 		// In the Form "P6163" Type, PrevX, PrevY, NewX, NewY
@@ -41,7 +58,7 @@ namespace Chess {
 		void removeChessPiece(std::bitset<64> &piece, bool isWhite);
 		void promote(std::bitset<64> &pawnPos, char type);
 
-		static std::vector<std::pair<int, int>> Bit64ToXAndY(std::bitset<64>&);
+		static std::vector<Coord> Bit64ToXAndY(std::bitset<64>&);
 		static std::bitset<64> XAndYToBit64(int x, int y);
 		static std::vector<std::bitset<64>> BitsToBit(std::bitset<64> &bits);
 
@@ -53,8 +70,12 @@ namespace Chess {
 		std::bitset<64> getBishops() const { return bishops; }
 		std::bitset<64> getQueens() const { return queens; }
 		std::bitset<64> getKings() const { return kings; }
+
 		const std::vector<std::string>& getHistory() const { return history; }
 
 		bool operator==(const ChessBoard &temp) const;
+		std::vector<std::bitset<64>> getAllAvailableMoves(bool isWhite);
 	};
 }
+
+
