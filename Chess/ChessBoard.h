@@ -25,7 +25,6 @@ namespace Chess {
 	class ChessBoard {
 	public:
 		const static int BOARD_LENGTH = 8;
-		
 
 	private:
 		// In the Form "P6163" Type, PrevX, PrevY, NewX, NewY
@@ -70,12 +69,12 @@ namespace Chess {
 		std::bitset<64> getBishops() const { return bishops; }
 		std::bitset<64> getQueens() const { return queens; }
 		std::bitset<64> getKings() const { return kings; }
+		std::vector<std::bitset<64>> getAllAvailableMoves(bool isWhite);
 
 		const std::vector<std::string>& getHistory() const { return history; }
 
 		bool operator==(const ChessBoard &temp) const;
-		std::vector<std::bitset<64>> getAllAvailableMoves(bool isWhite);
+		friend std::ostream& operator<<(std::ostream&, ChessBoard&);
+		friend std::istream& operator>>(std::istream&, ChessBoard&);		
 	};
 }
-
-
