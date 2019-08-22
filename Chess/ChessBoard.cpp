@@ -211,6 +211,8 @@ namespace Chess {
 		// If not then do nothing, No removing
 	}
 
+
+
 	bool ChessBoard::operator==(const ChessBoard &temp) const {
 		if (whiteTeamPos != temp.whiteTeamPos) { return false; }
 		if (blackTeamPos != temp.blackTeamPos) { return false; }
@@ -223,10 +225,10 @@ namespace Chess {
 		return true;
 	}
 
-	std::vector<std::pair<int, int>> ChessBoard::Bit64ToXAndY(std::bitset<64> &l) {
+	std::vector<Coord> ChessBoard::Bit64ToXAndY(std::bitset<64> &l) {
 		if (l == 0) { return { { -1, -1 } }; }
 
-		std::vector<std::pair<int, int>> XandY;
+		std::vector<Coord> XandY;
 		for (int i = 0; i < l.size(); i++) {
 			if (l[i]) {
 				XandY.push_back({ i % 8, i / 8 });

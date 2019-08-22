@@ -1,4 +1,5 @@
 #pragma once
+#include <unordered_map>
 #include "ChessBoard.h"
 #include "Display.h"
 #include "Movement.h"
@@ -18,6 +19,17 @@ namespace Chess {
 
 		// Get the Piece's mvmt and act accordingly
 		bool move(std::bitset<64> &, bool, bool);
+
+		MapOfCoords GetAllPawnMovements(bool isWhite);
+		MapOfCoords GetAllRookMovements(bool isWhite);
+		MapOfCoords GetAllBishopMovements(bool isWhite);
+		MapOfCoords GetAllKnightMovements(bool isWhite);
+		MapOfCoords GetAllQueenMovements(bool isWhite);
+		MapOfCoords GetAllKingMovements(bool isWhite);
+		
+		//Get all AvailableMoves
+		MapOfCoords getAllAvailableMoves(bool isWhite);
+
 	public:
 		static const char* AUTO_SAVE_FILE_PATH;
 
