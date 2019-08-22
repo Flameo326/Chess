@@ -40,7 +40,7 @@ namespace Chess {
 		do {
 			// Display the chess board
 			display.displayBoard(isWhite);
-			
+
 			// Check Condition
 			ChessCondition cond = getCondition(board, isWhite);
 			if (cond != ChessCondition::FINE) {

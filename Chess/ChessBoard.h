@@ -75,6 +75,6 @@ namespace Chess {
 
 		bool operator==(const ChessBoard &temp) const;
 		friend std::ostream& operator<<(std::ostream&, ChessBoard&);
-		friend std::istream& operator>>(std::istream&, ChessBoard&);		
+		friend std::istream& operator>>(std::istream&, ChessBoard&);
 	};
 }
