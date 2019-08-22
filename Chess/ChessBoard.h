@@ -71,10 +71,12 @@ namespace Chess {
 		std::bitset<64> getQueens() const { return queens; }
 		std::bitset<64> getKings() const { return kings; }
 
-		const std::vector<std::string>& getHistory() const { return history; }
+		const std::vector<std::string>& getHistory() const { return history; }	
+    std::vector<std::bitset<64>> getAllAvailableMoves(bool isWhite);
 
 		bool operator==(const ChessBoard &temp) const;
-		std::vector<std::bitset<64>> getAllAvailableMoves(bool isWhite);
+		friend std::ostream& operator<<(std::ostream&, ChessBoard&);
+		friend std::istream& operator>>(std::istream&, ChessBoard&);
 	};
 }
 
