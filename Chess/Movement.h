@@ -22,6 +22,17 @@ namespace Chess {
 		std::bitset<64> getKingMvmt(std::bitset<64> &kingPos, bool isWhite);
 		std::bitset<64> getTeamMvmt(bool isWhite);
 
+		//getting movements of individual peices on the board
+		MapOfCoords getAllPawnMovements(bool isWhite);
+		MapOfCoords getAllRookMovements(bool isWhite);
+		MapOfCoords getAllBishopMovements(bool isWhite);
+		MapOfCoords getAllKnightMovements(bool isWhite);
+		MapOfCoords getAllQueenMovements(bool isWhite);
+		MapOfCoords getAllKingMovements(bool isWhite);
+
+		//Get all Available Moves
+		MapOfCoords getAllAvailableMoves(bool isWhite);
+
 		// Checks position of Pawns,
 		// Then Checks History
 		std::bitset<64> checkForEnPassant(std::bitset<64> &king, std::bitset<64> &pawnPos, bool isWhit);
