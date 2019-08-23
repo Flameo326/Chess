@@ -18,10 +18,13 @@ namespace Chess {
 	}
 
 	void ChessGame::run() {
+
 		bool running = true;
 		while (running) {
 			running = this->playerTurn(isWhite);
+			
 			isWhite = !isWhite;
+			timer.setPlayerTurn(isWhite);
 			
 			if(!save(AUTO_SAVE_FILE_PATH)){
 				std::cout << "Auto save failed\n";
@@ -41,6 +44,8 @@ namespace Chess {
 			// Display the chess board
 			display.displayBoard(isWhite);
 
+			std::cout << (isWhite ? "Player1 time:" : "Player2 time: ") << (isWhite ? timer.getPlayer1Time() : timer.getPlayer2Time()) << std::endl;
+			timer.start();
 			// Check Condition
 			ChessCondition cond = getCondition(board, isWhite);
 			if (cond != ChessCondition::FINE) {
@@ -48,16 +53,18 @@ namespace Chess {
 
 				// Checkmate or Stalemate ends game...
 				if (cond != ChessCondition::CHECK) {
+					timer.gameOver();
 					return false;
 				}
 				inCheck = true;
 			} 
 
 			// Display and get Chess Piece that will move
+			//std::cout << "Time: " << (isWhite ? timer.getPlayer1Time() : timer.getPlayer2Time()) << std::endl;
 			piece = display.getPieceSelection(team, false);
 				
 		} while (!move(piece, isWhite, inCheck));		
-
+		timer.stop();
 		return true;
 	}
 
@@ -162,6 +169,7 @@ namespace Chess {
 			file.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore newline
 			file >> board; // Load Board
 			file.close();
+			timer.setPlayerTurn(isWhite);
 			return true;
 		}
 		return false;

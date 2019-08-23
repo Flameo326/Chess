@@ -144,6 +144,7 @@
     <ClCompile Include="ChessBoard.cpp" />
     <ClCompile Include="ChessCondition.cpp" />
     <ClCompile Include="ChessGame.cpp" />
+    <ClCompile Include="ChessTimer.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="ChessBoard.h" />
     <ClInclude Include="ChessCondition.h" />
     <ClInclude Include="ChessGame.h" />
+    <ClInclude Include="ChessTimer.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="Movement.h" />
   </ItemGroup>
