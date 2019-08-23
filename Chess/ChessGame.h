@@ -4,6 +4,7 @@
 #include "Display.h"
 #include "Movement.h"
 #include "ChessCondition.h"
+#include "ChessTimer.h"
 
 namespace Chess {
 
@@ -11,7 +12,8 @@ namespace Chess {
 	private:
 		Movement movement;
 		Display display;
-		ChessBoard board;	
+		ChessBoard board;
+		ChessTimer timer;
 		bool isWhite = true;
 
 		// Goes through each player util StaleMate or CheckMate occurs

@@ -1,24 +1,34 @@
 #include "ChessTimer.h"
+#include <iostream>
 #include <chrono>
 
 ChessTimer::ChessTimer()
 {
-	m_isStopped = false;
+	m_isStopped = true;
 	m_isPlayer1Turn = true;
+	m_gameOver = false;
+	player1Time = 0.0f;
+	player2Time = 0.0f;
+
 	thread = new std::thread([this]() {
-		while (m_gameOver)
+		while (!m_gameOver)
 		{
-			if (m_isStopped) std::this_thread::sleep_for(std::chrono::milliseconds(1));
-			
-			if (m_isPlayer1Turn)
+			if (m_isStopped) 
 			{
-				player1Time += .001f;
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			}
 			else
 			{
-				player2Time += .001f;
-			}
-			if (m_isStopped) std::this_thread::sleep_for(std::chrono::milliseconds(1));
+				if (m_isPlayer1Turn)
+				{
+					player1Time += .01f;
+				}
+				else
+				{
+					player2Time += .01f;
+				}
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			}		
 		}
 	});
 }
@@ -40,10 +50,15 @@ void ChessTimer::stop()
 	m_isStopped = true;
 }
 
-void ChessTimer::changePlayer()
+void ChessTimer::setPlayerTurn(bool value)
 {
-	m_isPlayer1Turn = !m_isPlayer1Turn;
+	m_isPlayer1Turn = value;
 }
+
+//void ChessTimer::changePlayer()
+//{
+//	m_isPlayer1Turn = !m_isPlayer1Turn;
+//}
 
 void ChessTimer::gameOver()
 {

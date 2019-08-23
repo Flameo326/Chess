@@ -9,7 +9,7 @@ public:
 	~ChessTimer();
 	void start();
 	void stop();
-	void changePlayer();
+	void setPlayerTurn(bool value);
 	void gameOver();
 
 	float getPlayer1Time() { return player1Time; }
